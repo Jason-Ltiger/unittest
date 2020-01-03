@@ -1,16 +1,45 @@
 ﻿#include<iostream>
-using namespace std;
 #include<gtest/gtest.h>
+#include "managercase/TestManager.h"
+
+
+#define EXPECT_EQ(m, n) \
+    if (m != n) \
+    { \
+        TestManager::GetInstance()->CurrentTestCase->nTestResult = 0; \
+        std::cout << "Failed" << std::endl; \
+        std::cout << "Expect:" << m << std::endl; \
+        std::cout  << "Actual:" << n << std::endl; \
+    }
+
+int Add(int a, int b)
+{
+    return a + b;
+}
+
+NTEST(AddTest)
+{
+    EXPECT_EQ(3, Add(1, 2));
+    EXPECT_EQ(2, Add(1, 1));
+    EXPECT_EQ(3, Add(1, 1));
+};
+
+int main(int argc,char *argv[])
+{
+    testing::InitGoogleTest(&argc,argv);
+    return RUN_ALL_TESTS_CASE();
+}
+
 
 
 #if 0
 struct LinkNode
 {
     int _data;
-    LinkNode *_next;
+    LinkNode* _next;
     LinkNode(const int& data)
         :_data(data)
-        ,_next(NULL)
+        , _next(NULL)
     {}
 };
 
@@ -22,116 +51,116 @@ public:
     {}
     void PushBack(const int& data)
     {
-        if(pHead == NULL)
-            return ;
-        LinkNode *newNode=new LinkNode(data);
-        if(pHead->_next == NULL){  //第一次插入结点
-            pHead->_next=newNode;
+        if (pHead == NULL)
+            return;
+        LinkNode* newNode = new LinkNode(data);
+        if (pHead->_next == NULL) {  //第一次插入结点
+            pHead->_next = newNode;
         }
-        else{  //找到最后一个结点直接尾插
-            LinkNode *cur=pHead->_next;
-            while(cur->_next){
-                cur=cur->_next;
+        else {  //找到最后一个结点直接尾插
+            LinkNode* cur = pHead->_next;
+            while (cur->_next) {
+                cur = cur->_next;
             }
-            cur->_next=newNode;
+            cur->_next = newNode;
         }
     }
 
     void PopBack()
     {
-        if(pHead == NULL)
-            return ;
-        LinkNode *cur=pHead;
-        LinkNode *prev=NULL;
-        while(cur->_next)
+        if (pHead == NULL)
+            return;
+        LinkNode* cur = pHead;
+        LinkNode* prev = NULL;
+        while (cur->_next)
         {
-            prev=cur;
-            cur=cur->_next;
+            prev = cur;
+            cur = cur->_next;
         }
-        prev->_next=NULL;
+        prev->_next = NULL;
         delete cur;
     }
 
-    LinkNode *FindNode(const int& data)
+    LinkNode* FindNode(const int& data)
     {
-        if(pHead == NULL)
+        if (pHead == NULL)
             return NULL;
-        LinkNode *cur=pHead->_next;
-        while(cur)
+        LinkNode* cur = pHead->_next;
+        while (cur)
         {
-            if(cur->_data == data)
+            if (cur->_data == data)
                 return cur;
-            cur=cur->_next;
+            cur = cur->_next;
         }
         return NULL;
     }
 
     bool Delete(int data)
     {
-        LinkNode *pos=FindNode(data);
-        if(pos == NULL)
+        LinkNode* pos = FindNode(data);
+        if (pos == NULL)
             return false;
-        LinkNode *cur=pHead->_next;
-        while(cur->_next != pos)
+        LinkNode* cur = pHead->_next;
+        while (cur->_next != pos)
         {
-            cur=cur->_next;
+            cur = cur->_next;
         }
-        cur->_next=pos->_next;
+        cur->_next = pos->_next;
         delete pos;
         return true;
     }
 
     void Destroy()
     {
-        if(pHead == NULL)
+        if (pHead == NULL)
             return;
-        LinkNode *cur=pHead->_next;
-        while(cur)
+        LinkNode* cur = pHead->_next;
+        while (cur)
         {
-            LinkNode *del=cur;
-            cur=cur->_next;
+            LinkNode* del = cur;
+            cur = cur->_next;
             delete del;
-            del=NULL;
+            del = NULL;
         }
         delete pHead;  //删除头结点
     }
-    LinkNode *pHead;
+    LinkNode* pHead;
 };
 
-class TestLink:public testing::Test
+class TestLink :public testing::Test
 {
 public:
     virtual void SetUp()
     {
-        cout<<"SetUp"<<endl;
-        for(int i=1;i<=5;i++){
+        cout << "SetUp" << endl;
+        for (int i = 1; i <= 5; i++) {
             link.PushBack(i);
         }
     }
     virtual void TearDown()
     {
-        cout<<"TearDown"<<endl;
+        cout << "TearDown" << endl;
         link.Destroy();
     }
     Link link;
 };
 
-TEST_F(TestLink,PushBack)
+TEST_F(TestLink, PushBack)
 {
     ASSERT_FALSE(link.pHead == NULL);
     link.PushBack(9);
-    LinkNode *res=link.FindNode(9);
+    LinkNode* res = link.FindNode(9);
     ASSERT_FALSE(res == NULL);
 }
 
-TEST_F(TestLink,PopBack)
+TEST_F(TestLink, PopBack)
 {
-    for(int i=1;i<=5;i++){
+    for (int i = 1; i <= 5; i++) {
         link.PopBack();
     }
 }
 
-TEST_F(TestLink,FindNode)
+TEST_F(TestLink, FindNode)
 {
     ASSERT_TRUE(link.FindNode(3));
     ASSERT_TRUE(link.FindNode(2));
@@ -141,7 +170,7 @@ TEST_F(TestLink,FindNode)
     ASSERT_FALSE(link.FindNode(7));
 }
 
-TEST_F(TestLink,Delete)
+TEST_F(TestLink, Delete)
 {
     ASSERT_FALSE(link.pHead == NULL);
     ASSERT_TRUE(link.Delete(3) == true);
@@ -186,12 +215,12 @@ template <typename T> class FooType {
 public:
     void Bar() {
         testing::StaticAssertTypeEq<bool, T>();
-        }
+    }
 };
 
 TEST(TypeAssertionTest, Demo)
 {
-    FooType<int> fooType; 
+    FooType<int> fooType;
     fooType.Bar();
 }
 
@@ -226,9 +255,3 @@ typedef testing::Types<char, int, unsigned int> MyTypes;
 #endif
 
 
-int main(int argc,char *argv[])
-{
-    testing::InitGoogleTest(&argc,argv);
-    
-    return RUN_ALL_TESTS();
-}

@@ -24,6 +24,7 @@ LINK_DIRECTORIES(
 FILE(GLOB SRC_LISTS 
     ${PROJECT_SOURCE_DIR}/[^.]*.cpp 
     ${PROJECT_SOURCE_DIR}/src/[^.]*.cpp
+    ${PROJECT_SOURCE_DIR}/src/managercase/[^.]*.cpp
 )
 
 ADD_EXECUTABLE(unittest ${SRC_LISTS})
