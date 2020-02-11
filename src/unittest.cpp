@@ -2,33 +2,29 @@
 #include<gtest/gtest.h>
 #include "managercase/TestManager.h"
 
-
-#define EXPECT_EQ(m, n) \
-    if (m != n) \
-    { \
-        TestManager::GetInstance()->CurrentTestCase->nTestResult = 0; \
-        std::cout << "Failed" << std::endl; \
-        std::cout << "Expect:" << m << std::endl; \
-        std::cout  << "Actual:" << n << std::endl; \
+bool Foo(int a,int b)
+{
+    if (a == 0 || b == 0)
+    {
+        throw "don't do that";
     }
-
-int Add(int a, int b)
-{
-    return a + b;
+    int c = a % b;
+    if (c == 0)
+        return true;
+    return false;
 }
 
-NTEST(AddTest)
+TEST(FooTest, HandleNoneZeroInput)
 {
-    EXPECT_EQ(3, Add(1, 2));
-    EXPECT_EQ(2, Add(1, 1));
-    EXPECT_EQ(3, Add(1, 1));
-};
-
-int main(int argc,char *argv[])
-{
-    testing::InitGoogleTest(&argc,argv);
-    return RUN_ALL_TESTS_CASE();
+    EXPECT_TRUE(Foo(4,2)) << "该文件不是json文件json文件json文件";
+    EXPECT_TRUE(Foo(0,0)) << "该文件不是json文件";
 }
+
+int main(int argc, char** argv) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+
 
 
 
