@@ -1175,7 +1175,7 @@ class GTEST_API_ UnitTest {
   // Returns the TestInfo object for the test that's currently running,
   // or NULL if no test is running.
   const TestInfo* current_test_info() const
-      GTEST_LOCK_EXCLUDED_(mutex_);
+      GTEST_LOCK_EXCLUDED_(mutex_);   
 
   // Returns the random seed used at the start of the current test run.
   int random_seed() const;

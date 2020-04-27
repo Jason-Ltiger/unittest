@@ -1,7 +1,6 @@
 ﻿#include<iostream>
 #include<gtest/gtest.h>
 #include "managercase/TestManager.h"
-
 bool Foo(int a,int b)
 {
     if (a == 0 || b == 0)
@@ -14,14 +13,11 @@ bool Foo(int a,int b)
     return false;
 }
 
-TEST(FooTest, HandleNoneZeroInput)
-{
-    EXPECT_TRUE(Foo(4,2)) << "该文件不是json文件json文件json文件";
-    EXPECT_TRUE(Foo(0,0)) << "该文件不是json文件";
-}
+
 
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
+
     return RUN_ALL_TESTS();
 }
 
