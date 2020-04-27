@@ -31,5 +31,4 @@ TestCase_Base* const TESTCASE_NAME(testcase_name) \
         new TESTCASE_NAME(testcase_name)(#testcase_name)); \
 void TESTCASE_NAME(testcase_name)::Run()
 
-#define NTEST(testcase_name) \
-    NANCY_TEST_(testcase_name)
+#define NTEST(testcase_name)  NANCY_TEST_(testcase_name)

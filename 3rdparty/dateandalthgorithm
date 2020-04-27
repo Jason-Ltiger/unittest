@@ -1,0 +1,18 @@
+//位图
+#include <iostream>
+#include <bitset>
+int bitset()
+{
+    std::bitset<8> file_bit{0};
+    file_bit.set(0);
+
+    file_bit.set(1);
+
+    file_bit.set(6);
+
+    print(file_bit.to_ullong());
+    file_bit.set(2);
+
+
+    return 0;
+}
